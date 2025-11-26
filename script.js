@@ -2,10 +2,9 @@
 const toggleBtn = document.getElementById('toggle-btn');
 const html = document.documentElement;
 
-// Check for saved theme preference or default to 'light'
-const currentTheme = localStorage.getItem('theme') || 'light';
+// Check for saved theme preference or default to 'dark'
+const currentTheme = localStorage.getItem('theme') || 'dark';
 html.setAttribute('data-theme', currentTheme);
-updateToggleIcon(currentTheme);
 
 toggleBtn.addEventListener('click', () => {
   const theme = html.getAttribute('data-theme');
@@ -13,26 +12,21 @@ toggleBtn.addEventListener('click', () => {
   
   html.setAttribute('data-theme', newTheme);
   localStorage.setItem('theme', newTheme);
-  updateToggleIcon(newTheme);
   
-  // Add rotation animation on toggle
+  // Add smooth rotation animation
   toggleBtn.style.transform = 'rotate(360deg)';
   setTimeout(() => {
     toggleBtn.style.transform = 'rotate(0deg)';
-  }, 300);
+  }, 400);
 });
 
-function updateToggleIcon(theme) {
-  toggleBtn.innerHTML = theme === 'light' ? '&#9788;' : '&#9789;';
-}
-
-// Scroll Animation Observer
+// Intersection Observer for Scroll Animations
 const observerOptions = {
-  threshold: 0.1,
-  rootMargin: '0px 0px -100px 0px'
+  threshold: 0.15,
+  rootMargin: '0px 0px -50px 0px'
 };
 
-const observer = new IntersectionObserver((entries) => {
+const fadeInObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
       entry.target.style.opacity = '1';
@@ -41,22 +35,63 @@ const observer = new IntersectionObserver((entries) => {
   });
 }, observerOptions);
 
-// Observe all sections and project cards
+// Animate sections on scroll
 const sections = document.querySelectorAll('section');
-const projectCards = document.querySelectorAll('.project-card');
-
 sections.forEach(section => {
   section.style.opacity = '0';
   section.style.transform = 'translateY(30px)';
   section.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
-  observer.observe(section);
+  fadeInObserver.observe(section);
 });
 
+// Staggered animation for project cards
+const projectCards = document.querySelectorAll('.project-card');
 projectCards.forEach((card, index) => {
   card.style.opacity = '0';
   card.style.transform = 'translateY(30px)';
   card.style.transition = `opacity 0.6s ease ${index * 0.1}s, transform 0.6s ease ${index * 0.1}s`;
-  observer.observe(card);
+  fadeInObserver.observe(card);
+});
+
+// Smooth parallax effect on header
+const header = document.querySelector('.header');
+let ticking = false;
+
+window.addEventListener('scroll', () => {
+  if (!ticking) {
+    window.requestAnimationFrame(() => {
+      const scrolled = window.pageYOffset;
+      if (header && scrolled < 600) {
+        header.style.transform = `translateY(${scrolled * 0.3}px)`;
+        header.style.opacity = Math.max(0, 1 - scrolled / 400);
+      }
+      ticking = false;
+    });
+    ticking = true;
+  }
+});
+
+// Enhanced 3D tilt effect for project cards
+projectCards.forEach(card => {
+  card.addEventListener('mousemove', (e) => {
+    if (window.innerWidth > 768) {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      
+      const rotateX = (y - centerY) / 15;
+      const rotateY = (centerX - x) / 15;
+      
+      card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-5px) scale(1.02)`;
+    }
+  });
+  
+  card.addEventListener('mouseleave', () => {
+    card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0) scale(1)';
+  });
 });
 
 // Smooth scroll for anchor links
@@ -73,40 +108,10 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   });
 });
 
-// Add parallax effect to header
-const header = document.querySelector('.header');
-window.addEventListener('scroll', () => {
-  const scrolled = window.pageYOffset;
-  if (header) {
-    header.style.transform = `translateY(${scrolled * 0.5}px)`;
-    header.style.opacity = 1 - scrolled / 500;
-  }
-});
+// Add ripple effect to glass buttons
+const glassButtons = document.querySelectorAll('.glass-btn, #toggle-btn');
 
-// Project card tilt effect on mouse move
-projectCards.forEach(card => {
-  card.addEventListener('mousemove', (e) => {
-    const rect = card.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-    
-    const rotateX = (y - centerY) / 20;
-    const rotateY = (centerX - x) / 20;
-    
-    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-10px)`;
-  });
-  
-  card.addEventListener('mouseleave', () => {
-    card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0)';
-  });
-});
-
-// Add ripple effect to buttons
-const buttons = document.querySelectorAll('.quick-links a, #toggle-btn');
-buttons.forEach(button => {
+glassButtons.forEach(button => {
   button.addEventListener('click', function(e) {
     const ripple = document.createElement('span');
     const rect = this.getBoundingClientRect();
@@ -117,7 +122,7 @@ buttons.forEach(button => {
     ripple.style.width = ripple.style.height = size + 'px';
     ripple.style.left = x + 'px';
     ripple.style.top = y + 'px';
-    ripple.classList.add('ripple');
+    ripple.classList.add('ripple-effect');
     
     this.appendChild(ripple);
     
@@ -127,18 +132,18 @@ buttons.forEach(button => {
   });
 });
 
-// Add CSS for ripple effect dynamically
-const style = document.createElement('style');
-style.textContent = `
-  .quick-links a, #toggle-btn {
+// Add ripple CSS dynamically
+const rippleStyle = document.createElement('style');
+rippleStyle.textContent = `
+  .glass-btn, #toggle-btn {
     position: relative;
     overflow: hidden;
   }
   
-  .ripple {
+  .ripple-effect {
     position: absolute;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.6);
+    background: rgba(20, 184, 166, 0.5);
     transform: scale(0);
     animation: ripple-animation 0.6s ease-out;
     pointer-events: none;
@@ -151,81 +156,131 @@ style.textContent = `
     }
   }
 `;
-document.head.appendChild(style);
+document.head.appendChild(rippleStyle);
 
-// Cursor trail effect (optional - can be removed if too distracting)
-const createTrail = (e) => {
-  const trail = document.createElement('div');
-  trail.className = 'cursor-trail';
-  trail.style.left = e.pageX + 'px';
-  trail.style.top = e.pageY + 'px';
-  document.body.appendChild(trail);
-  
-  setTimeout(() => {
-    trail.remove();
-  }, 500);
-};
-
-let throttleTimer;
-document.addEventListener('mousemove', (e) => {
-  if (throttleTimer) return;
-  throttleTimer = setTimeout(() => {
-    throttleTimer = null;
-    if (window.innerWidth > 768) {
-      createTrail(e);
+// Animate contact items on hover
+const contactItems = document.querySelectorAll('.contact-item');
+contactItems.forEach(item => {
+  item.addEventListener('mouseenter', function() {
+    const icon = this.querySelector('.contact-icon');
+    if (icon) {
+      icon.style.transform = 'scale(1.2) rotate(10deg)';
+      icon.style.transition = 'transform 0.3s ease';
     }
-  }, 50);
+  });
+  
+  item.addEventListener('mouseleave', function() {
+    const icon = this.querySelector('.contact-icon');
+    if (icon) {
+      icon.style.transform = 'scale(1) rotate(0deg)';
+    }
+  });
 });
 
-// Add cursor trail CSS
-const trailStyle = document.createElement('style');
-trailStyle.textContent = `
-  .cursor-trail {
-    position: absolute;
-    width: 8px;
-    height: 8px;
-    background: var(--accent);
-    border-radius: 50%;
-    pointer-events: none;
-    opacity: 0.6;
-    animation: trail-fade 0.5s ease-out forwards;
-    z-index: 9999;
-  }
-  
-  @keyframes trail-fade {
-    to {
-      transform: scale(0);
-      opacity: 0;
-    }
-  }
-`;
-document.head.appendChild(trailStyle);
-
-// Add loading animation
+// Loading animation
 window.addEventListener('load', () => {
   document.body.style.opacity = '0';
   setTimeout(() => {
-    document.body.style.transition = 'opacity 0.5s ease';
+    document.body.style.transition = 'opacity 0.6s ease';
     document.body.style.opacity = '1';
   }, 100);
 });
 
-// Add typing effect to subtitle (optional enhancement)
+// Typing effect for subtitle
 const subtitle = document.querySelector('.subtitle');
 if (subtitle) {
   const text = subtitle.textContent;
   subtitle.textContent = '';
+  subtitle.style.opacity = '1';
   let index = 0;
   
   const typeWriter = () => {
     if (index < text.length) {
       subtitle.textContent += text.charAt(index);
       index++;
-      setTimeout(typeWriter, 50);
+      setTimeout(typeWriter, 40);
     }
   };
   
-  setTimeout(typeWriter, 500);
+  setTimeout(typeWriter, 800);
 }
 
-console.log('Portfolio loaded successfully! 🚀');
+// Add glow effect to avatar on scroll
+const avatar = document.querySelector('.avatar');
+if (avatar) {
+  window.addEventListener('scroll', () => {
+    const scrolled = window.pageYOffset;
+    const glowIntensity = Math.min(scrolled / 300, 1);
+    avatar.style.boxShadow = `0 0 ${40 + glowIntensity * 40}px rgba(20, 184, 166, ${0.4 + glowIntensity * 0.4})`;
+  });
+}
+
+// Social links hover animation
+const socialLinks = document.querySelectorAll('.glass-btn');
+socialLinks.forEach(link => {
+  link.addEventListener('mouseenter', function() {
+    this.style.transform = 'translateY(-8px) scale(1.1)';
+  });
+  
+  link.addEventListener('mouseleave', function() {
+    this.style.transform = 'translateY(0) scale(1)';
+  });
+});
+
+// Add dynamic gradient shift to orbs
+const orbs = document.querySelectorAll('.gradient-orb');
+let orbDirection = 1;
+
+setInterval(() => {
+  orbs.forEach((orb, index) => {
+    const currentTransform = orb.style.transform || 'translate(0, 0)';
+    const offset = (index + 1) * 20 * orbDirection;
+    orb.style.transition = 'transform 3s ease-in-out';
+  });
+  orbDirection *= -1;
+}, 5000);
+
+// Project card click to open link
+projectCards.forEach(card => {
+  card.addEventListener('click', function(e) {
+    if (!e.target.closest('a')) {
+      const link = this.querySelector('h3 a');
+      if (link) {
+        window.open(link.href, '_blank');
+      }
+    }
+  });
+  
+  // Add pointer cursor
+  card.style.cursor = 'pointer';
+});
+
+// Easter egg: Konami code
+let konamiCode = [];
+const konamiPattern = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+
+document.addEventListener('keydown', (e) => {
+  konamiCode.push(e.key);
+  konamiCode = konamiCode.slice(-10);
+  
+  if (konamiCode.join(',') === konamiPattern.join(',')) {
+    document.body.style.animation = 'rainbow 2s ease infinite';
+    
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes rainbow {
+        0%, 100% { filter: hue-rotate(0deg); }
+        50% { filter: hue-rotate(360deg); }
+      }
+    `;
+    document.head.appendChild(style);
+    
+    setTimeout(() => {
+      document.body.style.animation = '';
+      style.remove();
+    }, 4000);
+  }
+});
+
+console.log('%c🚀 Portfolio Loaded Successfully!', 'color: #14b8a6; font-size: 16px; font-weight: bold;');
+console.log('%cBuilt with passion by Sourodyuti Biswas Sanyal', 'color: #2dd4bf; font-size: 12px;');
