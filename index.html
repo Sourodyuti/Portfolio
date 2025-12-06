@@ -1,304 +1,558 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Sourodyuti Biswas Sanyal | Portfolio</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sourodyuti Biswas Sanyal | 3D Portfolio</title>
   <link rel="stylesheet" href="styles.css">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
-  <!-- Animated Background -->
-  <div class="bg-animation">
-    <div class="wave wave-top"></div>
-    <div class="wave wave-middle"></div>
-    <div class="wave wave-bottom"></div>
+  <!-- 3D Canvas Background -->
+  <canvas id="webgl-canvas"></canvas>
 
-    <div class="float-circle circle-1"></div>
-    <div class="float-circle circle-2"></div>
-    <div class="float-circle circle-3"></div>
-  </div>
+  <!-- Particle Network Canvas -->
+  <canvas id="particle-canvas"></canvas>
 
-  <!-- Theme Toggle -->
-  <div id="theme-toggle">
-    <button id="toggle-btn" aria-label="Toggle theme">
-      <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        ircle cx="12" cy="12" r="5"></circle>
-        <line x1="12" y1="1" x2="12" y2="3"></line>
-        <line x1="12" y1="21" x2="12" y2="23"></line>
-        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-        <line x1="1" y1="12" x2="3" y2="12"></line>
-        <line x1="21" y1="12" x2="23" y2="12"></line>
-        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-      </svg>
-      <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-      </svg>
-    </button>
-  </div>
+  <!-- Navigation -->
+  <nav class="nav-container">
+    <div class="nav-content">
+      <a href="#" class="logo">
+        <span class="logo-bracket">&lt;</span>
+        <span class="logo-text">SB</span>
+        <span class="logo-bracket">/&gt;</span>
+      </a>
+      
+      <div class="nav-links">
+        <a href="#about" class="nav-link">About</a>
+        <a href="#projects" class="nav-link">Projects</a>
+        <a href="#skills" class="nav-link">Skills</a>
+        <a href="#contact" class="nav-link">Contact</a>
+      </div>
 
-  <!-- Header / Hero -->
-  <header class="header">
-    <div class="glass-card profile-card">
-      <img src="https://avatars.githubusercontent.com/u/189445745?v=4" alt="Sourodyuti Biswas Sanyal" class="avatar"/>
+      <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+        <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="5"/>
+          <line x1="12" y1="1" x2="12" y2="3"/>
+          <line x1="12" y1="21" x2="12" y2="23"/>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+          <line x1="1" y1="12" x2="3" y2="12"/>
+          <line x1="21" y1="12" x2="23" y2="12"/>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+        </svg>
+        <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+      </button>
+    </div>
+  </nav>
 
-      <h1>Sourodyuti Biswas Sanyal</h1>
-      <p class="subtitle">ML Engineer · Computer Vision Specialist · Entrepreneur</p>
-      <p class="location">📍 Durgapur, West Bengal, India</p>
+  <!-- Hero Section -->
+  <section class="hero-section" id="home">
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="badge-dot"></span>
+        <span>Available for opportunities</span>
+      </div>
+      
+      <h1 class="hero-title">
+        <span class="title-line">Hi, I'm</span>
+        <span class="title-name">Sourodyuti Biswas Sanyal</span>
+      </h1>
+      
+      <div class="hero-subtitle">
+        <span class="typing-text"></span>
+        <span class="cursor">|</span>
+      </div>
+      
+      <p class="hero-description">
+        ML Engineer & Computer Vision Specialist crafting intelligent systems
+        at the intersection of deep learning and real-world applications
+      </p>
 
-      <div class="company-badge">
-        <span class="badge-label">Co-Founder at</span>
-        <a href="https://curaa.co.in" target="_blank" rel="noopener" class="company-link">
-          <img src="curaa-logo.png" alt="CURAA" class="company-logo"/>
-          <span>CURAA</span>
+      <div class="hero-cta">
+        <a href="#projects" class="btn btn-primary">
+          <span>Explore Work</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="5" y1="12" x2="19" y2="12"/>
+            <polyline points="12 5 19 12 12 19"/>
+          </svg>
+        </a>
+        <a href="#contact" class="btn btn-secondary">
+          <span>Get In Touch</span>
         </a>
       </div>
 
-      <div class="social-links">
-        <a href="https://github.com/Sourodyuti" target="_blank" rel="noopener" class="glass-btn" aria-label="GitHub">
-          <svg viewBox="0 0 24 24" fill="currentColor">
+      <div class="hero-social">
+        <a href="https://github.com/Sourodyuti" target="_blank" rel="noopener" class="social-icon" aria-label="GitHub">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
             <path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.79-.26.79-.58v-2.23c-3.34.73-4.03-1.42-4.03-1.42-.55-1.39-1.34-1.76-1.34-1.76-1.09-.74.08-.73.08-.73 1.21.09 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.49.99.11-.78.42-1.31.76-1.61-2.67-.31-5.48-1.34-5.48-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.11-3.17 0 0 1.01-.32 3.3 1.23.96-.27 1.98-.4 3-.4 1.02 0 2.04.14 3 .4 2.29-1.55 3.29-1.23 3.29-1.23.65 1.65.24 2.87.12 3.17.77.84 1.24 1.91 1.24 3.22 0 4.6-2.81 5.62-5.49 5.92.43.37.82 1.1.82 2.23v3.29c0 .32.19.69.8.57C20.56 21.8 24 17.3 24 12 24 5.37 18.63 0 12 0z"/>
           </svg>
         </a>
-
-        <a href="https://www.linkedin.com/in/sourodyutibs" target="_blank" rel="noopener" class="glass-btn" aria-label="LinkedIn">
-          <svg viewBox="0 0 24 24" fill="currentColor">
+        <a href="https://www.linkedin.com/in/sourodyutibs" target="_blank" rel="noopener" class="social-icon" aria-label="LinkedIn">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
             <path d="M22.23 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.46C23.2 24 24 23.23 24 22.28V1.72C24 .77 23.2 0 22.23 0zM7.06 20.45H3.56V9h3.5v11.45zM5.31 7.43a2.06 2.06 0 110-4.12 2.06 2.06 0 010 4.12zM20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.37V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.38-1.85 3.61 0 4.24 2.38 4.24 5.48v6.26z"/>
           </svg>
         </a>
-
-        <a href="https://twitter.com/SourodyutiBS" target="_blank" rel="noopener" class="glass-btn" aria-label="Twitter">
-          <svg viewBox="0 0 24 24" fill="currentColor">
+        <a href="https://twitter.com/SourodyutiBS" target="_blank" rel="noopener" class="social-icon" aria-label="Twitter">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
             <path d="M23.95 4.57a10 10 0 01-2.82.78 4.93 4.93 0 002.16-2.7 9.86 9.86 0 01-3.12 1.2 4.92 4.92 0 00-8.38 4.48A13.95 13.95 0 011.67 3.16a4.93 4.93 0 001.52 6.57 4.9 4.9 0 01-2.23-.62v.06a4.93 4.93 0 003.95 4.83 4.96 4.96 0 01-2.22.08 4.93 4.93 0 004.6 3.42 9.9 9.9 0 01-6.14 2.12c-.4 0-.79-.02-1.18-.07A13.94 13.94 0 007.55 22c9.05 0 14-7.5 14-14 0-.21 0-.42-.02-.63A10.02 10.02 0 0024 4.59a9.9 9.9 0 01-2.87.79 4.93 4.93 0 002.16-2.81z"/>
           </svg>
         </a>
-
-        <a href="mailto:sourodyuti.biswas.sanyal.14@gmail.com" class="glass-btn" aria-label="Email">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <rect x="3" y="5" width="18" height="14" rx="2" ry="2"></rect>
-            <polyline points="3,7 12,13 21,7"></polyline>
+        <a href="mailto:sourodyuti.biswas.sanyal.14@gmail.com" class="social-icon" aria-label="Email">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="5" width="18" height="14" rx="2"/>
+            <polyline points="3,7 12,13 21,7"/>
           </svg>
         </a>
       </div>
     </div>
-  </header>
+
+    <div class="scroll-indicator">
+      <div class="scroll-line"></div>
+      <span>Scroll to explore</span>
+    </div>
+  </section>
 
   <!-- About Section -->
-  <section class="about">
-    <div class="glass-card">
-      <h2>About Me</h2>
+  <section class="about-section" id="about">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">&lt;about&gt;</span>
+        <h2 class="section-title">Who I Am</h2>
+      </div>
 
-      <p>
-        I am a Computer Science undergraduate and builder at the intersection of Deep Tech and Consumer Software.
-        My passion lies in translating complex algorithmic concepts into scalable, user-centric applications.
-      </p>
+      <div class="about-grid">
+        <div class="about-image">
+          <div class="image-container">
+            <img src="https://avatars.githubusercontent.com/u/189445745?v=4" alt="Sourodyuti Biswas Sanyal">
+            <div class="image-overlay"></div>
+          </div>
+        </div>
 
-      <p class="mt-20">
-        <strong>As a Researcher &amp; Developer:</strong> My technical focus is on Computer Vision and Artificial Intelligence.
-        I actively research and implement pipelines for 3D reconstruction, knowledge distillation, and autonomous market intelligence.
-        I love working with Python, PyTorch, and TensorFlow to push the boundaries of what machines can "see" and "learn."
-      </p>
+        <div class="about-content">
+          <p class="about-text">
+            I'm a <strong>Computer Science undergraduate</strong> and builder at the intersection of <strong>Deep Tech</strong> and <strong>Consumer Software</strong>. 
+            My passion lies in translating complex algorithmic concepts into scalable, user-centric applications.
+          </p>
 
-      <p class="mt-20">
-        <strong>As an Entrepreneur:</strong> I am the Co-Founder of
-        <a href="https://curaa.co.in" target="_blank" rel="noopener" class="inline-link">Curaa</a>, a comprehensive pet care ecosystem.
-        We are building a seamless platform that bridges the gap between pet parents and premium veterinary services, products, and wellness solutions.
-        Building Curaa has sharpened my Full Stack development skills and taught me the grit required to turn an idea into a deployed product serving real users.
-      </p>
+          <p class="about-text">
+            As a <strong>Researcher & Developer</strong>, my technical focus is on <strong>Computer Vision</strong> and <strong>Artificial Intelligence</strong>. 
+            I actively research and implement pipelines for 3D reconstruction, knowledge distillation, and autonomous market intelligence.
+          </p>
 
-      <p class="mt-20">
-        I am always looking for the next challenging problem to solve—whether it's optimizing a neural network or scaling a web platform.
-      </p>
+          <p class="about-text">
+            As an <strong>Entrepreneur</strong>, I'm the Co-Founder of 
+            <a href="https://curaa.co.in" target="_blank" rel="noopener" class="text-link">CURAA</a>, 
+            a comprehensive pet care ecosystem bridging the gap between pet parents and premium veterinary services.
+          </p>
 
-      <div class="tech-stack">
-        <span class="tech-badge">Python</span>
-        <span class="tech-badge">PyTorch</span>
-        <span class="tech-badge">TensorFlow</span>
-        <span class="tech-badge">C++</span>
-        <span class="tech-badge">JavaScript</span>
-        <span class="tech-badge">React</span>
-        <span class="tech-badge">Node.js</span>
-        <span class="tech-badge">Computer Vision</span>
+          <div class="company-badge-large">
+            <img src="curaa-logo.png" alt="CURAA" class="company-logo-large">
+            <div>
+              <span class="company-role">Co-Founder</span>
+              <a href="https://curaa.co.in" target="_blank" rel="noopener" class="company-name">CURAA</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills Section -->
+  <section class="skills-section" id="skills">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">&lt;skills&gt;</span>
+        <h2 class="section-title">Technical Arsenal</h2>
+      </div>
+
+      <div class="skills-grid">
+        <div class="skill-category">
+          <div class="skill-icon">🤖</div>
+          <h3>Machine Learning</h3>
+          <div class="skill-tags">
+            <span class="skill-tag">PyTorch</span>
+            <span class="skill-tag">TensorFlow</span>
+            <span class="skill-tag">OpenCV</span>
+            <span class="skill-tag">Scikit-learn</span>
+            <span class="skill-tag">Keras</span>
+          </div>
+        </div>
+
+        <div class="skill-category">
+          <div class="skill-icon">👁️</div>
+          <h3>Computer Vision</h3>
+          <div class="skill-tags">
+            <span class="skill-tag">CNNs</span>
+            <span class="skill-tag">Object Detection</span>
+            <span class="skill-tag">3D Reconstruction</span>
+            <span class="skill-tag">Image Segmentation</span>
+            <span class="skill-tag">Facial Recognition</span>
+          </div>
+        </div>
+
+        <div class="skill-category">
+          <div class="skill-icon">💻</div>
+          <h3>Programming</h3>
+          <div class="skill-tags">
+            <span class="skill-tag">Python</span>
+            <span class="skill-tag">C++</span>
+            <span class="skill-tag">JavaScript</span>
+            <span class="skill-tag">TypeScript</span>
+            <span class="skill-tag">Dart</span>
+          </div>
+        </div>
+
+        <div class="skill-category">
+          <div class="skill-icon">🌐</div>
+          <h3>Web Development</h3>
+          <div class="skill-tags">
+            <span class="skill-tag">React</span>
+            <span class="skill-tag">Node.js</span>
+            <span class="skill-tag">Express</span>
+            <span class="skill-tag">MongoDB</span>
+            <span class="skill-tag">PostgreSQL</span>
+          </div>
+        </div>
+
+        <div class="skill-category">
+          <div class="skill-icon">📱</div>
+          <h3>Mobile Development</h3>
+          <div class="skill-tags">
+            <span class="skill-tag">Flutter</span>
+            <span class="skill-tag">React Native</span>
+            <span class="skill-tag">Expo</span>
+            <span class="skill-tag">Android</span>
+            <span class="skill-tag">iOS</span>
+          </div>
+        </div>
+
+        <div class="skill-category">
+          <div class="skill-icon">🛠️</div>
+          <h3>Tools & Platforms</h3>
+          <div class="skill-tags">
+            <span class="skill-tag">Git</span>
+            <span class="skill-tag">Docker</span>
+            <span class="skill-tag">AWS</span>
+            <span class="skill-tag">Vercel</span>
+            <span class="skill-tag">Linux</span>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- Projects Section -->
-  <section class="projects">
-    <h2>Featured Projects</h2>
-
-    <div class="project-grid">
-
-      <div class="glass-card project-card" data-category="ml">
-        <div class="project-header">
-          <div class="project-icon">🎓</div>
-          <div class="project-meta">
-            <span class="badge">Python</span>
-            <span class="badge">PyTorch</span>
-          </div>
-        </div>
-        <h3>
-          <a href="https://github.com/Sourodyuti/Vision-Knowledge-Distillation" target="_blank" rel="noopener">
-            Vision-Knowledge-Distillation
-          </a>
-        </h3>
-        <p>
-          PyTorch framework for teacher-student learning with ResNet18 and MobileNetV2.
-          Features automatic tracking, visualization, and comprehensive metrics on CIFAR-10/100 datasets.
-        </p>
+  <section class="projects-section" id="projects">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">&lt;projects&gt;</span>
+        <h2 class="section-title">Featured Work</h2>
       </div>
 
-      <div class="glass-card project-card" data-category="startup">
-        <div class="project-header">
-          <div class="project-icon">🐾</div>
-          <div class="project-meta">
-            <span class="badge">Flutter</span>
-            <span class="badge">Startup</span>
+      <div class="projects-grid">
+        <!-- Project 1 -->
+        <div class="project-card" data-category="ml">
+          <div class="project-number">01</div>
+          <div class="project-header">
+            <div class="project-tags">
+              <span class="tag">Python</span>
+              <span class="tag">PyTorch</span>
+              <span class="tag">ML</span>
+            </div>
+            <a href="https://github.com/Sourodyuti/Vision-Knowledge-Distillation" target="_blank" rel="noopener" class="project-link">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                <polyline points="15 3 21 3 21 9"/>
+                <line x1="10" y1="14" x2="21" y2="3"/>
+              </svg>
+            </a>
+          </div>
+          <h3 class="project-title">Vision Knowledge Distillation</h3>
+          <p class="project-description">
+            Advanced PyTorch framework for teacher-student learning with ResNet18 and MobileNetV2. 
+            Features automatic tracking, visualization, and comprehensive metrics on CIFAR-10/100 datasets.
+          </p>
+          <div class="project-stats">
+            <div class="stat">
+              <span class="stat-value">95%</span>
+              <span class="stat-label">Accuracy</span>
+            </div>
+            <div class="stat">
+              <span class="stat-value">3x</span>
+              <span class="stat-label">Faster</span>
+            </div>
           </div>
         </div>
-        <h3>
-          <a href="https://github.com/Sourodyuti/Curaa-app" target="_blank" rel="noopener">
-            Curaa: Pet Care Ecosystem
-          </a>
-        </h3>
-        <p>
-          Next-generation digital platform for pet care &amp; wellness.
-          A unified mobile interface orchestrating veterinary services, grooming scheduling, and premium e-commerce for the pet care industry.
-        </p>
-      </div>
 
-      <div class="glass-card project-card" data-category="cv">
-        <div class="project-header">
-          <div class="project-icon">🎭</div>
-          <div class="project-meta">
-            <span class="badge">Python</span>
-            <span class="badge">CV</span>
+        <!-- Project 2 -->
+        <div class="project-card" data-category="startup">
+          <div class="project-number">02</div>
+          <div class="project-header">
+            <div class="project-tags">
+              <span class="tag">Flutter</span>
+              <span class="tag">Node.js</span>
+              <span class="tag">Startup</span>
+            </div>
+            <a href="https://github.com/Sourodyuti/Curaa-app" target="_blank" rel="noopener" class="project-link">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                <polyline points="15 3 21 3 21 9"/>
+                <line x1="10" y1="14" x2="21" y2="3"/>
+              </svg>
+            </a>
+          </div>
+          <h3 class="project-title">CURAA Pet Care Ecosystem</h3>
+          <p class="project-description">
+            Next-generation digital platform for pet care & wellness. A unified mobile interface orchestrating veterinary services, 
+            grooming scheduling, and premium e-commerce for the pet care industry.
+          </p>
+          <div class="project-stats">
+            <div class="stat">
+              <span class="stat-value">1K+</span>
+              <span class="stat-label">Users</span>
+            </div>
+            <div class="stat">
+              <span class="stat-value">Live</span>
+              <span class="stat-label">Production</span>
+            </div>
           </div>
         </div>
-        <h3>
-          <a href="https://github.com/Sourodyuti/3D-FaceReconstruction" target="_blank" rel="noopener">
-            3D-FaceReconstruction
-          </a>
-        </h3>
-        <p>
-          High-quality 3D facial mesh generation from single 2D images.
-          Integrates facial landmark detection, texture mapping, and depth estimation for AR/VR applications.
-        </p>
-      </div>
 
-      <div class="glass-card project-card" data-category="cv">
-        <div class="project-header">
-          <div class="project-icon">😊</div>
-          <div class="project-meta">
-            <span class="badge">TensorFlow</span>
-            <span class="badge">OpenCV</span>
+        <!-- Project 3 -->
+        <div class="project-card" data-category="cv">
+          <div class="project-number">03</div>
+          <div class="project-header">
+            <div class="project-tags">
+              <span class="tag">Python</span>
+              <span class="tag">OpenCV</span>
+              <span class="tag">3D</span>
+            </div>
+            <a href="https://github.com/Sourodyuti/3D-FaceReconstruction" target="_blank" rel="noopener" class="project-link">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                <polyline points="15 3 21 3 21 9"/>
+                <line x1="10" y1="14" x2="21" y2="3"/>
+              </svg>
+            </a>
+          </div>
+          <h3 class="project-title">3D Face Reconstruction</h3>
+          <p class="project-description">
+            High-quality 3D facial mesh generation from single 2D images. Integrates facial landmark detection, 
+            texture mapping, and depth estimation for AR/VR applications.
+          </p>
+          <div class="project-stats">
+            <div class="stat">
+              <span class="stat-value">68</span>
+              <span class="stat-label">Landmarks</span>
+            </div>
+            <div class="stat">
+              <span class="stat-value">Real-time</span>
+              <span class="stat-label">Processing</span>
+            </div>
           </div>
         </div>
-        <h3>
-          <a href="https://github.com/Sourodyuti/Emotion-Detection" target="_blank" rel="noopener">
-            Emotion-Detection
-          </a>
-        </h3>
-        <p>
-          Real-time facial expression recognition system classifying 7 emotions using a CNN trained on the FER-2013 dataset.
-          Supports webcam and image-based detection.
-        </p>
-      </div>
 
-      <div class="glass-card project-card" data-category="fintech">
-        <div class="project-header">
-          <div class="project-icon">📈</div>
-          <div class="project-meta">
-            <span class="badge">Python</span>
-            <span class="badge">Algo-Trading</span>
+        <!-- Project 4 -->
+        <div class="project-card" data-category="cv">
+          <div class="project-number">04</div>
+          <div class="project-header">
+            <div class="project-tags">
+              <span class="tag">TensorFlow</span>
+              <span class="tag">CNN</span>
+              <span class="tag">OpenCV</span>
+            </div>
+            <a href="https://github.com/Sourodyuti/Emotion-Detection" target="_blank" rel="noopener" class="project-link">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                <polyline points="15 3 21 3 21 9"/>
+                <line x1="10" y1="14" x2="21" y2="3"/>
+              </svg>
+            </a>
+          </div>
+          <h3 class="project-title">Emotion Detection System</h3>
+          <p class="project-description">
+            Real-time facial expression recognition system classifying 7 emotions using a CNN trained on the FER-2013 dataset. 
+            Supports webcam and image-based detection.
+          </p>
+          <div class="project-stats">
+            <div class="stat">
+              <span class="stat-value">7</span>
+              <span class="stat-label">Emotions</span>
+            </div>
+            <div class="stat">
+              <span class="stat-value">30 FPS</span>
+              <span class="stat-label">Speed</span>
+            </div>
           </div>
         </div>
-        <h3>
-          <a href="https://github.com/Sourodyuti/EtherSensAI" target="_blank" rel="noopener">
-            EtherSensAI
-          </a>
-        </h3>
-        <p>
-          Autonomous cryptocurrency market intelligence engine detecting high-probability volatility vectors
-          through real-time algorithmic analysis and signal processing.
-        </p>
-      </div>
 
-      <div class="glass-card project-card" data-category="web">
-        <div class="project-header">
-          <div class="project-icon">🔐</div>
-          <div class="project-meta">
-            <span class="badge">JavaScript</span>
-            <span class="badge">Blockchain</span>
+        <!-- Project 5 -->
+        <div class="project-card" data-category="fintech">
+          <div class="project-number">05</div>
+          <div class="project-header">
+            <div class="project-tags">
+              <span class="tag">Python</span>
+              <span class="tag">Algo-Trading</span>
+              <span class="tag">ML</span>
+            </div>
+            <a href="https://github.com/Sourodyuti/EtherSensAI" target="_blank" rel="noopener" class="project-link">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                <polyline points="15 3 21 3 21 9"/>
+                <line x1="10" y1="14" x2="21" y2="3"/>
+              </svg>
+            </a>
+          </div>
+          <h3 class="project-title">EtherSensAI</h3>
+          <p class="project-description">
+            Autonomous cryptocurrency market intelligence engine detecting high-probability volatility vectors 
+            through real-time algorithmic analysis and signal processing.
+          </p>
+          <div class="project-stats">
+            <div class="stat">
+              <span class="stat-value">24/7</span>
+              <span class="stat-label">Monitoring</span>
+            </div>
+            <div class="stat">
+              <span class="stat-value">Auto</span>
+              <span class="stat-label">Detection</span>
+            </div>
           </div>
         </div>
-        <h3>
-          <a href="https://github.com/Sourodyuti/VeriFi" target="_blank" rel="noopener">
-            VeriFi
-          </a>
-        </h3>
-        <p>
-          Document authentication toolkit leveraging SHA-256 hashing and digital signatures.
-          Features web UI, CLI, audit trails, and plugin-driven blockchain anchoring.
-        </p>
-      </div>
 
+        <!-- Project 6 -->
+        <div class="project-card" data-category="web">
+          <div class="project-number">06</div>
+          <div class="project-header">
+            <div class="project-tags">
+              <span class="tag">JavaScript</span>
+              <span class="tag">Blockchain</span>
+              <span class="tag">Security</span>
+            </div>
+            <a href="https://github.com/Sourodyuti/VeriFi" target="_blank" rel="noopener" class="project-link">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                <polyline points="15 3 21 3 21 9"/>
+                <line x1="10" y1="14" x2="21" y2="3"/>
+              </svg>
+            </a>
+          </div>
+          <h3 class="project-title">VeriFi Authentication</h3>
+          <p class="project-description">
+            Document authentication toolkit leveraging SHA-256 hashing and digital signatures. Features web UI, 
+            CLI, audit trails, and plugin-driven blockchain anchoring.
+          </p>
+          <div class="project-stats">
+            <div class="stat">
+              <span class="stat-value">SHA-256</span>
+              <span class="stat-label">Encryption</span>
+            </div>
+            <div class="stat">
+              <span class="stat-value">Secure</span>
+              <span class="stat-label">Verified</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
   <!-- Contact Section -->
-  <section class="contact">
-    <div class="glass-card">
-      <h2>Let's Connect</h2>
-      <p class="contact-description">
-        Open to collaborations, research opportunities, and building products at the intersection of AI and real-world impact.
-      </p>
+  <section class="contact-section" id="contact">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">&lt;contact&gt;</span>
+        <h2 class="section-title">Let's Build Something</h2>
+      </div>
 
-      <div class="contact-grid">
-        <div class="contact-item">
-          <span class="contact-icon">💼</span>
-          <div>
-            <strong>LinkedIn</strong>
-            <a href="https://www.linkedin.com/in/sourodyutibs" target="_blank" rel="noopener">in/sourodyutibs</a>
-          </div>
+      <div class="contact-content">
+        <p class="contact-intro">
+          I'm always open to discussing new projects, creative ideas, or opportunities to be part of your visions. 
+          Whether you have a question or just want to say hi, I'll try my best to get back to you!
+        </p>
+
+        <div class="contact-grid">
+          <a href="mailto:sourodyuti.biswas.sanyal.14@gmail.com" class="contact-card">
+            <div class="contact-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="5" width="18" height="14" rx="2"/>
+                <polyline points="3,7 12,13 21,7"/>
+              </svg>
+            </div>
+            <h3>Email</h3>
+            <p>sourodyuti.biswas.sanyal.14@gmail.com</p>
+          </a>
+
+          <a href="https://www.linkedin.com/in/sourodyutibs" target="_blank" rel="noopener" class="contact-card">
+            <div class="contact-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M22.23 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.46C23.2 24 24 23.23 24 22.28V1.72C24 .77 23.2 0 22.23 0zM7.06 20.45H3.56V9h3.5v11.45zM5.31 7.43a2.06 2.06 0 110-4.12 2.06 2.06 0 010 4.12zM20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.37V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.38-1.85 3.61 0 4.24 2.38 4.24 5.48v6.26z"/>
+              </svg>
+            </div>
+            <h3>LinkedIn</h3>
+            <p>in/sourodyutibs</p>
+          </a>
+
+          <a href="https://github.com/Sourodyuti" target="_blank" rel="noopener" class="contact-card">
+            <div class="contact-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.79-.26.79-.58v-2.23c-3.34.73-4.03-1.42-4.03-1.42-.55-1.39-1.34-1.76-1.34-1.76-1.09-.74.08-.73.08-.73 1.21.09 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.49.99.11-.78.42-1.31.76-1.61-2.67-.31-5.48-1.34-5.48-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.11-3.17 0 0 1.01-.32 3.3 1.23.96-.27 1.98-.4 3-.4 1.02 0 2.04.14 3 .4 2.29-1.55 3.29-1.23 3.29-1.23.65 1.65.24 2.87.12 3.17.77.84 1.24 1.91 1.24 3.22 0 4.6-2.81 5.62-5.49 5.92.43.37.82 1.1.82 2.23v3.29c0 .32.19.69.8.57C20.56 21.8 24 17.3 24 12 24 5.37 18.63 0 12 0z"/>
+              </svg>
+            </div>
+            <h3>GitHub</h3>
+            <p>@Sourodyuti</p>
+          </a>
+
+          <a href="https://twitter.com/SourodyutiBS" target="_blank" rel="noopener" class="contact-card">
+            <div class="contact-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M23.95 4.57a10 10 0 01-2.82.78 4.93 4.93 0 002.16-2.7 9.86 9.86 0 01-3.12 1.2 4.92 4.92 0 00-8.38 4.48A13.95 13.95 0 011.67 3.16a4.93 4.93 0 001.52 6.57 4.9 4.9 0 01-2.23-.62v.06a4.93 4.93 0 003.95 4.83 4.96 4.96 0 01-2.22.08 4.93 4.93 0 004.6 3.42 9.9 9.9 0 01-6.14 2.12c-.4 0-.79-.02-1.18-.07A13.94 13.94 0 007.55 22c9.05 0 14-7.5 14-14 0-.21 0-.42-.02-.63A10.02 10.02 0 0024 4.59a9.9 9.9 0 01-2.87.79 4.93 4.93 0 002.16-2.81z"/>
+              </svg>
+            </div>
+            <h3>Twitter</h3>
+            <p>@SourodyutiBS</p>
+          </a>
         </div>
 
-        <div class="contact-item">
-          <span class="contact-icon">🐙</span>
-          <div>
-            <strong>GitHub</strong>
-            <a href="https://github.com/Sourodyuti" target="_blank" rel="noopener">@Sourodyuti</a>
-          </div>
-        </div>
-
-        <div class="contact-item">
-          <span class="contact-icon">🐦</span>
-          <div>
-            <strong>Twitter</strong>
-            <a href="https://twitter.com/SourodyutiBS" target="_blank" rel="noopener">@SourodyutiBS</a>
-          </div>
-        </div>
-
-        <div class="contact-item email-item">
-          <span class="contact-icon">✉️</span>
-          <div>
-            <strong>Email</strong>
-            <a href="mailto:sourodyuti.biswas.sanyal.14@gmail.com">
-              sourodyuti.biswas.sanyal.14@gmail.com
-            </a>
-          </div>
+        <div class="cta-large">
+          <h3>Ready to collaborate?</h3>
+          <a href="mailto:sourodyuti.biswas.sanyal.14@gmail.com" class="btn btn-primary btn-large">
+            <span>Send me an email</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="5" y1="12" x2="19" y2="12"/>
+              <polyline points="12 5 19 12 12 19"/>
+            </svg>
+          </a>
         </div>
       </div>
     </div>
   </section>
 
   <!-- Footer -->
-  <footer>
-    <p>&copy; 2025 Sourodyuti Biswas Sanyal · Built with passion and code</p>
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-left">
+          <p>&copy; 2025 Sourodyuti Biswas Sanyal</p>
+          <p class="footer-subtitle">Built with passion, code & Three.js</p>
+        </div>
+        <div class="footer-right">
+          <a href="#home" class="footer-link">Back to top ↑</a>
+        </div>
+      </div>
+    </div>
   </footer>
 
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

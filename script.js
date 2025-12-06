@@ -1,101 +1,293 @@
-// Theme Toggle Functionality
-const toggleBtn = document.getElementById('toggle-btn');
+// ===========================
+// Theme Toggle
+// ===========================
+const themeToggle = document.getElementById('theme-toggle');
 const html = document.documentElement;
 
-// Prefer saved preference, otherwise default to 'light'
-const savedTheme = localStorage.getItem('theme');
-const currentTheme = savedTheme ? savedTheme : 'light';
+// Check for saved theme preference or default to 'dark'
+const currentTheme = localStorage.getItem('theme') || 'dark';
 html.setAttribute('data-theme', currentTheme);
 
-toggleBtn.addEventListener('click', () => {
-  const theme = html.getAttribute('data-theme');
-  const newTheme = theme === 'light' ? 'dark' : 'light';
-
-  html.setAttribute('data-theme', newTheme);
-  localStorage.setItem('theme', newTheme);
-
-  // Add smooth rotation animation
-  toggleBtn.style.transform = 'rotate(360deg)';
-  setTimeout(() => {
-    toggleBtn.style.transform = 'rotate(0deg)';
-  }, 400);
+themeToggle.addEventListener('click', () => {
+  const theme = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', theme);
+  localStorage.setItem('theme', theme);
 });
 
-// Intersection Observer for Scroll Animations
-const observerOptions = {
-  threshold: 0.15,
-  rootMargin: '0px 0px -50px 0px'
-};
+// ===========================
+// Typing Animation
+// ===========================
+const typingText = document.querySelector('.typing-text');
+const roles = [
+  'ML Engineer',
+  'Computer Vision Specialist',
+  'Full Stack Developer',
+  'Entrepreneur',
+  'Problem Solver'
+];
 
-const fadeInObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.style.opacity = '1';
-      entry.target.style.transform = 'translateY(0)';
-    }
-  });
-}, observerOptions);
+let roleIndex = 0;
+let charIndex = 0;
+let isDeleting = false;
 
-// Animate sections on scroll
-const sections = document.querySelectorAll('section');
-sections.forEach(section => {
-  section.style.opacity = '0';
-  section.style.transform = 'translateY(30px)';
-  section.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
-  fadeInObserver.observe(section);
-});
-
-// Staggered animation for project cards
-const projectCards = document.querySelectorAll('.project-card');
-projectCards.forEach((card, index) => {
-  card.style.opacity = '0';
-  card.style.transform = 'translateY(30px)';
-  card.style.transition = `opacity 0.6s ease ${index * 0.1}s, transform 0.6s ease ${index * 0.1}s`;
-  fadeInObserver.observe(card);
-});
-
-// Smooth parallax effect on header
-const header = document.querySelector('.header');
-let ticking = false;
-
-window.addEventListener('scroll', () => {
-  if (!ticking) {
-    window.requestAnimationFrame(() => {
-      const scrolled = window.pageYOffset;
-      if (header && scrolled < 600) {
-        header.style.transform = `translateY(${scrolled * 0.3}px)`;
-        header.style.opacity = Math.max(0, 1 - scrolled / 400);
-      }
-      ticking = false;
-    });
-    ticking = true;
+function type() {
+  const currentRole = roles[roleIndex];
+  
+  if (isDeleting) {
+    typingText.textContent = currentRole.substring(0, charIndex - 1);
+    charIndex--;
+  } else {
+    typingText.textContent = currentRole.substring(0, charIndex + 1);
+    charIndex++;
   }
+  
+  if (!isDeleting && charIndex === currentRole.length) {
+    setTimeout(() => isDeleting = true, 2000);
+  } else if (isDeleting && charIndex === 0) {
+    isDeleting = false;
+    roleIndex = (roleIndex + 1) % roles.length;
+  }
+  
+  const typingSpeed = isDeleting ? 50 : 100;
+  setTimeout(type, typingSpeed);
+}
+
+type();
+
+// ===========================
+// Three.js 3D Background
+// ===========================
+const canvas = document.getElementById('webgl-canvas');
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+camera.position.z = 5;
+
+// Create 3D geometries
+const geometries = [];
+
+// Torus
+const torusGeometry = new THREE.TorusGeometry(1, 0.4, 16, 100);
+const torusMaterial = new THREE.MeshStandardMaterial({
+  color: 0x6366f1,
+  wireframe: true,
+  transparent: true,
+  opacity: 0.3
+});
+const torus = new THREE.Mesh(torusGeometry, torusMaterial);
+torus.position.set(-3, 2, -2);
+scene.add(torus);
+geometries.push(torus);
+
+// Icosahedron
+const icoGeometry = new THREE.IcosahedronGeometry(1, 0);
+const icoMaterial = new THREE.MeshStandardMaterial({
+  color: 0x8b5cf6,
+  wireframe: true,
+  transparent: true,
+  opacity: 0.3
+});
+const icosahedron = new THREE.Mesh(icoGeometry, icoMaterial);
+icosahedron.position.set(3, -2, -3);
+scene.add(icosahedron);
+geometries.push(icosahedron);
+
+// Sphere
+const sphereGeometry = new THREE.SphereGeometry(0.8, 32, 32);
+const sphereMaterial = new THREE.MeshStandardMaterial({
+  color: 0x6366f1,
+  wireframe: true,
+  transparent: true,
+  opacity: 0.2
+});
+const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+sphere.position.set(2, 3, -4);
+scene.add(sphere);
+geometries.push(sphere);
+
+// Lighting
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+scene.add(ambientLight);
+
+const pointLight = new THREE.PointLight(0x6366f1, 1);
+pointLight.position.set(5, 5, 5);
+scene.add(pointLight);
+
+// Mouse movement effect
+let mouseX = 0;
+let mouseY = 0;
+
+document.addEventListener('mousemove', (event) => {
+  mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+  mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
 });
 
-// Enhanced 3D tilt effect for project cards
-projectCards.forEach(card => {
-  card.addEventListener('mousemove', (e) => {
-    if (window.innerWidth > 768) {
-      const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
+// Animation loop
+function animate() {
+  requestAnimationFrame(animate);
+  
+  // Rotate geometries
+  geometries.forEach((geo, index) => {
+    geo.rotation.x += 0.001 * (index + 1);
+    geo.rotation.y += 0.002 * (index + 1);
+  });
+  
+  // Camera movement based on mouse
+  camera.position.x += (mouseX * 0.5 - camera.position.x) * 0.05;
+  camera.position.y += (mouseY * 0.5 - camera.position.y) * 0.05;
+  camera.lookAt(scene.position);
+  
+  renderer.render(scene, camera);
+}
 
-      const centerX = rect.width / 2;
-      const centerY = rect.height / 2;
+animate();
 
-      const rotateX = (y - centerY) / 15;
-      const rotateY = (centerX - x) / 15;
+// Handle window resize
+window.addEventListener('resize', () => {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+});
 
-      card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-5px) scale(1.02)`;
+// ===========================
+// Particle Network
+// ===========================
+const particleCanvas = document.getElementById('particle-canvas');
+const ctx = particleCanvas.getContext('2d');
+
+particleCanvas.width = window.innerWidth;
+particleCanvas.height = window.innerHeight;
+
+const particles = [];
+const particleCount = 80;
+const connectionDistance = 150;
+
+class Particle {
+  constructor() {
+    this.x = Math.random() * particleCanvas.width;
+    this.y = Math.random() * particleCanvas.height;
+    this.vx = (Math.random() - 0.5) * 0.5;
+    this.vy = (Math.random() - 0.5) * 0.5;
+    this.radius = Math.random() * 2 + 1;
+  }
+  
+  update() {
+    this.x += this.vx;
+    this.y += this.vy;
+    
+    if (this.x < 0 || this.x > particleCanvas.width) this.vx *= -1;
+    if (this.y < 0 || this.y > particleCanvas.height) this.vy *= -1;
+  }
+  
+  draw() {
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(99, 102, 241, 0.5)';
+    ctx.fill();
+  }
+}
+
+// Initialize particles
+for (let i = 0; i < particleCount; i++) {
+  particles.push(new Particle());
+}
+
+function connectParticles() {
+  for (let i = 0; i < particles.length; i++) {
+    for (let j = i + 1; j < particles.length; j++) {
+      const dx = particles[i].x - particles[j].x;
+      const dy = particles[i].y - particles[j].y;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+      
+      if (distance < connectionDistance) {
+        const opacity = (1 - distance / connectionDistance) * 0.3;
+        ctx.beginPath();
+        ctx.strokeStyle = `rgba(99, 102, 241, ${opacity})`;
+        ctx.lineWidth = 1;
+        ctx.moveTo(particles[i].x, particles[i].y);
+        ctx.lineTo(particles[j].x, particles[j].y);
+        ctx.stroke();
+      }
     }
-  });
+  }
+}
 
-  card.addEventListener('mouseleave', () => {
-    card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0) scale(1)';
+function animateParticles() {
+  ctx.clearRect(0, 0, particleCanvas.width, particleCanvas.height);
+  
+  particles.forEach(particle => {
+    particle.update();
+    particle.draw();
   });
+  
+  connectParticles();
+  requestAnimationFrame(animateParticles);
+}
+
+animateParticles();
+
+window.addEventListener('resize', () => {
+  particleCanvas.width = window.innerWidth;
+  particleCanvas.height = window.innerHeight;
 });
 
-// Smooth scroll for anchor links
+// ===========================
+// GSAP Scroll Animations
+// ===========================
+if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger);
+  
+  // Animate sections on scroll
+  gsap.utils.toArray('.section-header').forEach(header => {
+    gsap.from(header, {
+      scrollTrigger: {
+        trigger: header,
+        start: 'top 80%',
+        end: 'top 50%',
+        scrub: 1
+      },
+      opacity: 0,
+      y: 50
+    });
+  });
+  
+  // Animate skill categories
+  gsap.utils.toArray('.skill-category').forEach((card, index) => {
+    gsap.from(card, {
+      scrollTrigger: {
+        trigger: card,
+        start: 'top 85%',
+        end: 'top 60%',
+        scrub: 1
+      },
+      opacity: 0,
+      y: 50,
+      delay: index * 0.1
+    });
+  });
+  
+  // Animate project cards
+  gsap.utils.toArray('.project-card').forEach((card, index) => {
+    gsap.from(card, {
+      scrollTrigger: {
+        trigger: card,
+        start: 'top 85%',
+        end: 'top 60%',
+        scrub: 1
+      },
+      opacity: 0,
+      y: 50,
+      delay: index * 0.1
+    });
+  });
+}
+
+// ===========================
+// Smooth Scroll for Navigation
+// ===========================
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', function (e) {
     e.preventDefault();
@@ -109,165 +301,29 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   });
 });
 
-// Add ripple effect to glass buttons
-const glassButtons = document.querySelectorAll('.glass-btn, #toggle-btn');
+// ===========================
+// Navigation scroll effect
+// ===========================
+const nav = document.querySelector('.nav-container');
+let lastScroll = 0;
 
-glassButtons.forEach(button => {
-  button.addEventListener('click', function(e) {
-    const ripple = document.createElement('span');
-    const rect = this.getBoundingClientRect();
-    const size = Math.max(rect.width, rect.height);
-    const x = e.clientX - rect.left - size / 2;
-    const y = e.clientY - rect.top - size / 2;
-
-    ripple.style.width = ripple.style.height = size + 'px';
-    ripple.style.left = x + 'px';
-    ripple.style.top = y + 'px';
-    ripple.classList.add('ripple-effect');
-
-    this.appendChild(ripple);
-
-    setTimeout(() => {
-      ripple.remove();
-    }, 600);
-  });
-});
-
-// Add ripple CSS dynamically
-const rippleStyle = document.createElement('style');
-rippleStyle.textContent = `
-  .glass-btn, #toggle-btn {
-    position: relative;
-    overflow: hidden;
+window.addEventListener('scroll', () => {
+  const currentScroll = window.pageYOffset;
+  
+  if (currentScroll > 100) {
+    nav.style.background = html.getAttribute('data-theme') === 'dark' 
+      ? 'rgba(10, 10, 15, 0.95)' 
+      : 'rgba(255, 255, 255, 0.95)';
+    nav.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.1)';
+  } else {
+    nav.style.background = html.getAttribute('data-theme') === 'dark' 
+      ? 'rgba(10, 10, 15, 0.8)' 
+      : 'rgba(255, 255, 255, 0.8)';
+    nav.style.boxShadow = 'none';
   }
-
-  .ripple-effect {
-    position: absolute;
-    border-radius: 50%;
-    background: rgba(20, 184, 166, 0.5);
-    transform: scale(0);
-    animation: ripple-animation 0.6s ease-out;
-    pointer-events: none;
-  }
-
-  @keyframes ripple-animation {
-    to {
-      transform: scale(4);
-      opacity: 0;
-    }
-  }
-`;
-document.head.appendChild(rippleStyle);
-
-// Animate contact items on hover
-const contactItems = document.querySelectorAll('.contact-item');
-contactItems.forEach(item => {
-  item.addEventListener('mouseenter', function() {
-    const icon = this.querySelector('.contact-icon');
-    if (icon) {
-      icon.style.transform = 'scale(1.2) rotate(10deg)';
-      icon.style.transition = 'transform 0.3s ease';
-    }
-  });
-
-  item.addEventListener('mouseleave', function() {
-    const icon = this.querySelector('.contact-icon');
-    if (icon) {
-      icon.style.transform = 'scale(1) rotate(0deg)';
-    }
-  });
+  
+  lastScroll = currentScroll;
 });
 
-// Loading fade-in animation
-window.addEventListener('load', () => {
-  document.body.style.opacity = '0';
-  setTimeout(() => {
-    document.body.style.transition = 'opacity 0.6s ease';
-    document.body.style.opacity = '1';
-  }, 100);
-});
-
-// Typing effect for subtitle
-const subtitle = document.querySelector('.subtitle');
-if (subtitle) {
-  const text = subtitle.textContent;
-  subtitle.textContent = '';
-  subtitle.style.opacity = '1';
-  let index = 0;
-
-  const typeWriter = () => {
-    if (index < text.length) {
-      subtitle.textContent += text.charAt(index);
-      index++;
-      setTimeout(typeWriter, 40);
-    }
-  };
-
-  setTimeout(typeWriter, 800);
-}
-
-// Add glow effect to avatar on scroll
-const avatar = document.querySelector('.avatar');
-if (avatar) {
-  window.addEventListener('scroll', () => {
-    const scrolled = window.pageYOffset;
-    const glowIntensity = Math.min(scrolled / 300, 1);
-    avatar.style.boxShadow = `0 0 ${40 + glowIntensity * 40}px rgba(20, 184, 166, ${0.4 + glowIntensity * 0.4})`;
-  });
-}
-
-// Social links hover animation
-const socialLinks = document.querySelectorAll('.glass-btn');
-socialLinks.forEach(link => {
-  link.addEventListener('mouseenter', function() {
-    this.style.transform = 'translateY(-8px) scale(1.1)';
-  });
-
-  link.addEventListener('mouseleave', function() {
-    this.style.transform = 'translateY(0) scale(1)';
-  });
-});
-
-// Project card click to open link
-projectCards.forEach(card => {
-  card.addEventListener('click', function(e) {
-    if (!e.target.closest('a')) {
-      const link = this.querySelector('h3 a');
-      if (link) {
-        window.open(link.href, '_blank');
-      }
-    }
-  });
-
-  card.style.cursor = 'pointer';
-});
-
-// Easter egg: Konami code
-let konamiCode = [];
-const konamiPattern = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
-
-document.addEventListener('keydown', (e) => {
-  konamiCode.push(e.key);
-  konamiCode = konamiCode.slice(-10);
-
-  if (konamiCode.join(',') === konamiPattern.join(',')) {
-    document.body.style.animation = 'rainbow 2s ease infinite';
-
-    const style = document.createElement('style');
-    style.textContent = `
-      @keyframes rainbow {
-        0%, 100% { filter: hue-rotate(0deg); }
-        50% { filter: hue-rotate(360deg); }
-      }
-    `;
-    document.head.appendChild(style);
-
-    setTimeout(() => {
-      document.body.style.animation = '';
-      style.remove();
-    }, 4000);
-  }
-});
-
-console.log('%c🚀 Portfolio Loaded Successfully!', 'color: #14b8a6; font-size: 16px; font-weight: bold;');
-console.log('%cBuilt with passion by Sourodyuti Biswas Sanyal', 'color: #2dd4bf; font-size: 12px;');
+console.log('%c🚀 Portfolio by Sourodyuti Biswas Sanyal', 'color: #6366f1; font-size: 20px; font-weight: bold;');
+console.log('%cBuilt with Three.js, GSAP & vanilla JavaScript', 'color: #8b5cf6; font-size: 14px;');
