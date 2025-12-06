@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sourodyuti Biswas Sanyal | Portfolio</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Animated Background -->
+  <div class="bg-animation">
+    <div class="wave wave-top"></div>
+    <div class="wave wave-middle"></div>
+    <div class="wave wave-bottom"></div>
+
+    <div class="float-circle circle-1"></div>
+    <div class="float-circle circle-2"></div>
+    <div class="float-circle circle-3"></div>
+  </div>
+
+  <!-- Theme Toggle -->
+  <div id="theme-toggle">
+    <button id="toggle-btn" aria-label="Toggle theme">
+      <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        ircle cx="12" cy="12" r="5"></circle>
+        <line x1="12" y1="1" x2="12" y2="3"></line>
+        <line x1="12" y1="21" x2="12" y2="23"></line>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+        <line x1="1" y1="12" x2="3" y2="12"></line>
+        <line x1="21" y1="12" x2="23" y2="12"></line>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+      </svg>
+      <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Header / Hero -->
+  <header class="header">
+    <div class="glass-card profile-card">
+      <img src="https://avatars.githubusercontent.com/u/189445745?v=4" alt="Sourodyuti Biswas Sanyal" class="avatar"/>
+
+      <h1>Sourodyuti Biswas Sanyal</h1>
+      <p class="subtitle">ML Engineer · Computer Vision Specialist · Entrepreneur</p>
+      <p class="location">📍 Durgapur, West Bengal, India</p>
+
+      <div class="company-badge">
+        <span class="badge-label">Co-Founder at</span>
+        <a href="https://curaa.co.in" target="_blank" rel="noopener" class="company-link">
+          <img src="curaa-logo.png" alt="CURAA" class="company-logo"/>
+          <span>CURAA</span>
+        </a>
+      </div>
+
+      <div class="social-links">
+        <a href="https://github.com/Sourodyuti" target="_blank" rel="noopener" class="glass-btn" aria-label="GitHub">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.79-.26.79-.58v-2.23c-3.34.73-4.03-1.42-4.03-1.42-.55-1.39-1.34-1.76-1.34-1.76-1.09-.74.08-.73.08-.73 1.21.09 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.49.99.11-.78.42-1.31.76-1.61-2.67-.31-5.48-1.34-5.48-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.11-3.17 0 0 1.01-.32 3.3 1.23.96-.27 1.98-.4 3-.4 1.02 0 2.04.14 3 .4 2.29-1.55 3.29-1.23 3.29-1.23.65 1.65.24 2.87.12 3.17.77.84 1.24 1.91 1.24 3.22 0 4.6-2.81 5.62-5.49 5.92.43.37.82 1.1.82 2.23v3.29c0 .32.19.69.8.57C20.56 21.8 24 17.3 24 12 24 5.37 18.63 0 12 0z"/>
+          </svg>
+        </a>
+
+        <a href="https://www.linkedin.com/in/sourodyutibs" target="_blank" rel="noopener" class="glass-btn" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M22.23 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.46C23.2 24 24 23.23 24 22.28V1.72C24 .77 23.2 0 22.23 0zM7.06 20.45H3.56V9h3.5v11.45zM5.31 7.43a2.06 2.06 0 110-4.12 2.06 2.06 0 010 4.12zM20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.37V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.38-1.85 3.61 0 4.24 2.38 4.24 5.48v6.26z"/>
+          </svg>
+        </a>
+
+        <a href="https://twitter.com/SourodyutiBS" target="_blank" rel="noopener" class="glass-btn" aria-label="Twitter">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M23.95 4.57a10 10 0 01-2.82.78 4.93 4.93 0 002.16-2.7 9.86 9.86 0 01-3.12 1.2 4.92 4.92 0 00-8.38 4.48A13.95 13.95 0 011.67 3.16a4.93 4.93 0 001.52 6.57 4.9 4.9 0 01-2.23-.62v.06a4.93 4.93 0 003.95 4.83 4.96 4.96 0 01-2.22.08 4.93 4.93 0 004.6 3.42 9.9 9.9 0 01-6.14 2.12c-.4 0-.79-.02-1.18-.07A13.94 13.94 0 007.55 22c9.05 0 14-7.5 14-14 0-.21 0-.42-.02-.63A10.02 10.02 0 0024 4.59a9.9 9.9 0 01-2.87.79 4.93 4.93 0 002.16-2.81z"/>
+          </svg>
+        </a>
+
+        <a href="mailto:sourodyuti.biswas.sanyal.14@gmail.com" class="glass-btn" aria-label="Email">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="5" width="18" height="14" rx="2" ry="2"></rect>
+            <polyline points="3,7 12,13 21,7"></polyline>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- About Section -->
+  <section class="about">
+    <div class="glass-card">
+      <h2>About Me</h2>
+
+      <p>
+        I am a Computer Science undergraduate and builder at the intersection of Deep Tech and Consumer Software.
+        My passion lies in translating complex algorithmic concepts into scalable, user-centric applications.
+      </p>
+
+      <p class="mt-20">
+        <strong>As a Researcher &amp; Developer:</strong> My technical focus is on Computer Vision and Artificial Intelligence.
+        I actively research and implement pipelines for 3D reconstruction, knowledge distillation, and autonomous market intelligence.
+        I love working with Python, PyTorch, and TensorFlow to push the boundaries of what machines can "see" and "learn."
+      </p>
+
+      <p class="mt-20">
+        <strong>As an Entrepreneur:</strong> I am the Co-Founder of
+        <a href="https://curaa.co.in" target="_blank" rel="noopener" class="inline-link">Curaa</a>, a comprehensive pet care ecosystem.
+        We are building a seamless platform that bridges the gap between pet parents and premium veterinary services, products, and wellness solutions.
+        Building Curaa has sharpened my Full Stack development skills and taught me the grit required to turn an idea into a deployed product serving real users.
+      </p>
+
+      <p class="mt-20">
+        I am always looking for the next challenging problem to solve—whether it's optimizing a neural network or scaling a web platform.
+      </p>
+
+      <div class="tech-stack">
+        <span class="tech-badge">Python</span>
+        <span class="tech-badge">PyTorch</span>
+        <span class="tech-badge">TensorFlow</span>
+        <span class="tech-badge">C++</span>
+        <span class="tech-badge">JavaScript</span>
+        <span class="tech-badge">React</span>
+        <span class="tech-badge">Node.js</span>
+        <span class="tech-badge">Computer Vision</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects Section -->
+  <section class="projects">
+    <h2>Featured Projects</h2>
+
+    <div class="project-grid">
+
+      <div class="glass-card project-card" data-category="ml">
+        <div class="project-header">
+          <div class="project-icon">🎓</div>
+          <div class="project-meta">
+            <span class="badge">Python</span>
+            <span class="badge">PyTorch</span>
+          </div>
+        </div>
+        <h3>
+          <a href="https://github.com/Sourodyuti/Vision-Knowledge-Distillation" target="_blank" rel="noopener">
+            Vision-Knowledge-Distillation
+          </a>
+        </h3>
+        <p>
+          PyTorch framework for teacher-student learning with ResNet18 and MobileNetV2.
+          Features automatic tracking, visualization, and comprehensive metrics on CIFAR-10/100 datasets.
+        </p>
+      </div>
+
+      <div class="glass-card project-card" data-category="startup">
+        <div class="project-header">
+          <div class="project-icon">🐾</div>
+          <div class="project-meta">
+            <span class="badge">Flutter</span>
+            <span class="badge">Startup</span>
+          </div>
+        </div>
+        <h3>
+          <a href="https://github.com/Sourodyuti/Curaa-app" target="_blank" rel="noopener">
+            Curaa: Pet Care Ecosystem
+          </a>
+        </h3>
+        <p>
+          Next-generation digital platform for pet care &amp; wellness.
+          A unified mobile interface orchestrating veterinary services, grooming scheduling, and premium e-commerce for the pet care industry.
+        </p>
+      </div>
+
+      <div class="glass-card project-card" data-category="cv">
+        <div class="project-header">
+          <div class="project-icon">🎭</div>
+          <div class="project-meta">
+            <span class="badge">Python</span>
+            <span class="badge">CV</span>
+          </div>
+        </div>
+        <h3>
+          <a href="https://github.com/Sourodyuti/3D-FaceReconstruction" target="_blank" rel="noopener">
+            3D-FaceReconstruction
+          </a>
+        </h3>
+        <p>
+          High-quality 3D facial mesh generation from single 2D images.
+          Integrates facial landmark detection, texture mapping, and depth estimation for AR/VR applications.
+        </p>
+      </div>
+
+      <div class="glass-card project-card" data-category="cv">
+        <div class="project-header">
+          <div class="project-icon">😊</div>
+          <div class="project-meta">
+            <span class="badge">TensorFlow</span>
+            <span class="badge">OpenCV</span>
+          </div>
+        </div>
+        <h3>
+          <a href="https://github.com/Sourodyuti/Emotion-Detection" target="_blank" rel="noopener">
+            Emotion-Detection
+          </a>
+        </h3>
+        <p>
+          Real-time facial expression recognition system classifying 7 emotions using a CNN trained on the FER-2013 dataset.
+          Supports webcam and image-based detection.
+        </p>
+      </div>
+
+      <div class="glass-card project-card" data-category="fintech">
+        <div class="project-header">
+          <div class="project-icon">📈</div>
+          <div class="project-meta">
+            <span class="badge">Python</span>
+            <span class="badge">Algo-Trading</span>
+          </div>
+        </div>
+        <h3>
+          <a href="https://github.com/Sourodyuti/EtherSensAI" target="_blank" rel="noopener">
+            EtherSensAI
+          </a>
+        </h3>
+        <p>
+          Autonomous cryptocurrency market intelligence engine detecting high-probability volatility vectors
+          through real-time algorithmic analysis and signal processing.
+        </p>
+      </div>
+
+      <div class="glass-card project-card" data-category="web">
+        <div class="project-header">
+          <div class="project-icon">🔐</div>
+          <div class="project-meta">
+            <span class="badge">JavaScript</span>
+            <span class="badge">Blockchain</span>
+          </div>
+        </div>
+        <h3>
+          <a href="https://github.com/Sourodyuti/VeriFi" target="_blank" rel="noopener">
+            VeriFi
+          </a>
+        </h3>
+        <p>
+          Document authentication toolkit leveraging SHA-256 hashing and digital signatures.
+          Features web UI, CLI, audit trails, and plugin-driven blockchain anchoring.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section class="contact">
+    <div class="glass-card">
+      <h2>Let's Connect</h2>
+      <p class="contact-description">
+        Open to collaborations, research opportunities, and building products at the intersection of AI and real-world impact.
+      </p>
+
+      <div class="contact-grid">
+        <div class="contact-item">
+          <span class="contact-icon">💼</span>
+          <div>
+            <strong>LinkedIn</strong>
+            <a href="https://www.linkedin.com/in/sourodyutibs" target="_blank" rel="noopener">in/sourodyutibs</a>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <span class="contact-icon">🐙</span>
+          <div>
+            <strong>GitHub</strong>
+            <a href="https://github.com/Sourodyuti" target="_blank" rel="noopener">@Sourodyuti</a>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <span class="contact-icon">🐦</span>
+          <div>
+            <strong>Twitter</strong>
+            <a href="https://twitter.com/SourodyutiBS" target="_blank" rel="noopener">@SourodyutiBS</a>
+          </div>
+        </div>
+
+        <div class="contact-item email-item">
+          <span class="contact-icon">✉️</span>
+          <div>
+            <strong>Email</strong>
+            <a href="mailto:sourodyuti.biswas.sanyal.14@gmail.com">
+              sourodyuti.biswas.sanyal.14@gmail.com
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Sourodyuti Biswas Sanyal · Built with passion and code</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
